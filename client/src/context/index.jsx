@@ -1,4 +1,4 @@
-import { createContext, useContext,useState,useEffect } from "react";
+import { createContext, useContext,useState,useEffect,useRef } from "react";
 
 import {ethers} from "ethers";
 
@@ -8,47 +8,169 @@ import { useNavigate } from "react-router-dom";
 import {ABI, ADDRESS} from "../contract/index";
 
 
+
 const GlobalContext = createContext();
 
-export const GlobalContextProvider=({children})=>{
+const { ethereum } = window;
 
-    const [walletAddress,setWalletAddress]=useState("");
-    const [provider,setProvider]=useState('');
-    const [contract,setContract]=useState('');
+export const GlobalContextProvider = ({ children }) => {
+  const [walletAddress, setWalletAddress] = useState('');
+  const [battleGround, setBattleGround] = useState('bg-astral');
+  const [contract, setContract] = useState(null);
+  const [provider, setProvider] = useState(null);
+  const [step, setStep] = useState(1);
+  const [gameData, setGameData] = useState({ players: [], pendingBattles: [], activeBattle: null });
+  const [showAlert, setShowAlert] = useState({ status: false, type: 'info', message: '' });
+  const [battleName, setBattleName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [updateGameData, setUpdateGameData] = useState(0);
 
-    const updateAddress=async()=>{
-        const accounts=await window.ethereum.request({method:"eth_requestAccounts"});
-        console.log(accounts);
+  const player1Ref = useRef();
+  const player2Ref = useRef();
+
+  const navigate = useNavigate();
+
+  //* Set battleground to local storage
+//   useEffect(() => {
+//     const isBattleground = localStorage.getItem('battleground');
+
+//     if (isBattleground) {
+//       setBattleGround(isBattleground);
+//     } else {
+//       localStorage.setItem('battleground', battleGround);
+//     }
+//   }, []);
+
+  //* Reset web3 onboarding modal params
+  useEffect(() => {
+    // const resetParams = async () => {
+    // //   const currentStep = await GetParams();
+
+    //   setStep(currentStep.step);
+    // };
+
+    // resetParams();
+
+    window?.ethereum?.on('chainChanged', () => resetParams());
+    window?.ethereum?.on('accountsChanged', () => resetParams());
+  }, []);
+
+  //* Set the wallet address to the state
+  const updateCurrentWalletAddress = async () => {
+    const accounts = await window?.ethereum?.request({ method: 'eth_requestAccounts' });
+
+    if (accounts) setWalletAddress(accounts[0]);
+  };
+
+  useEffect(() => {
+    updateCurrentWalletAddress();
+
+    window?.ethereum?.on('accountsChanged', updateCurrentWalletAddress);
+  }, []);
+
+  //* Set the smart contract and provider to the state
+  useEffect(() => {
+    const setSmartContractAndProvider = async () => {
+    //   const web3Modal = new Web3Modal();
+    //   const connection = await web3Modal.connect();
+    //   const newProvider = new ethers.providers.Web3Provider(connection);
+    //   const signer = newProvider.getSigner();
+    //   const newContract = new ethers.Contract(ADDRESS, ABI, signer);
+
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const newContract = new ethers.Contract(ADDRESS, ABI, signer);
+
+      setContract(newContract);
+
+    };
+
+    setSmartContractAndProvider();
+    
+  }, []);
+
+  //* Activate event listeners for the smart contract
+//   useEffect(() => {
+//     if (step === -1 && contract) {
+//       createEventListeners({
+//         navigate,
+//         contract,
+//         provider,
+//         walletAddress,
+//         setShowAlert,
+//         player1Ref,
+//         player2Ref,
+//         setUpdateGameData,
+//       });
+//     }
+//   }, [step]);
+
+  //* Set the game data to the state
+//   useEffect(() => {
+//     const fetchGameData = async () => {
+//       if (contract) {
+//         const fetchedBattles = await contract.getAllBattles();
+//         const pendingBattles = fetchedBattles.filter((battle) => battle.battleStatus === 0);
+//         let activeBattle = null;
+
+//         fetchedBattles.forEach((battle) => {
+//           if (battle.players.find((player) => player.toLowerCase() === walletAddress.toLowerCase())) {
+//             if (battle.winner.startsWith('0x00')) {
+//               activeBattle = battle;
+//             }
+//           }
+//         });
+
+//         setGameData({ pendingBattles: pendingBattles.slice(1), activeBattle });
+//       }
+//     };
+
+//     fetchGameData();
+//   }, [contract, updateGameData]);
+
+  //* Handle alerts
+  useEffect(() => {
+    if (showAlert?.status) {
+      const timer = setTimeout(() => {
+        setShowAlert({ status: false, type: 'info', message: '' });
+      }, [5000]);
+
+      return () => clearTimeout(timer);
     }
+  }, [showAlert]);
 
-    useEffect(()=>{
-        updateAddress();
-    },[])
+  //* Handle error messages
+//   useEffect(() => {
+//     if (errorMessage) {
+//       const parsedErrorMessage = errorMessage?.reason?.slice('execution reverted: '.length).slice(0, -1);
 
-    useEffect(()=>{
-        const setSMartContractAndProvider=async()=>{
-            const web3modal=new Web3Modal();
-            const connection=await web3modal.connect();
-            const newProvider=new ethers.providers.Web3Provider(connection);
-            const signer=newProvider.getSigner();
+//       if (parsedErrorMessage) {
+//         setShowAlert({
+//           status: true,
+//           type: 'failure',
+//           message: parsedErrorMessage,
+//         });
+//       }
+//     }
+//   }, [errorMessage]);
 
-            const newContract=new ethers.Contract(ADDRESS,ABI,signer);
+  return (
+    <GlobalContext.Provider
+      value={{
+       
+        contract,
+        walletAddress,
+        
+        showAlert,
+        setShowAlert,
+        
+        errorMessage,
+        setErrorMessage,
+      }}
+    >
+      {children}
+    </GlobalContext.Provider>
+  );
+};
 
-            
-            setProvider(newProvider);
-            setContract(newContract);
-        }
-
-
-        setSMartContractAndProvider();
-    },[])
-
-
-    return(
-        <GlobalContext.Provider value={{}}>
-            {children}
-        </GlobalContext.Provider>
-    )
-}
-
-export const useGlobalContext=()=>useContext(GlobalContext);
+export const useGlobalContext = () => useContext(GlobalContext);
