@@ -81,6 +81,9 @@ export const GlobalContextProvider = ({ children }) => {
       const signer = provider.getSigner();
       const newContract = new ethers.Contract(ADDRESS, ABI, signer);
 
+        setProvider(provider);
+        setContract(newContract);
+
       setContract(newContract);
 
     };
