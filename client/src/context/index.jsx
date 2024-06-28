@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 import {ABI, ADDRESS} from "../contract/index";
 
+import {createEventListeners} from "../context/createEventListners";
+
 
 
 const GlobalContext = createContext();
@@ -59,23 +61,26 @@ export const GlobalContextProvider = ({ children }) => {
   const updateCurrentWalletAddress = async () => {
     const accounts = await window?.ethereum?.request({ method: 'eth_requestAccounts' });
 
-    if (accounts) setWalletAddress(accounts[0]);
+    if (accounts){
+        setWalletAddress(accounts[0]);
+    } 
   };
 
-  useEffect(() => {
-    updateCurrentWalletAddress();
+  // useEffect(() => {
+  //   updateCurrentWalletAddress();
 
+  //   window?.ethereum?.on('accountsChanged', updateCurrentWalletAddress);
+  // }, []);
+
+  const connectWallet = async () => { 
+
+    updateCurrentWalletAddress();
     window?.ethereum?.on('accountsChanged', updateCurrentWalletAddress);
-  }, []);
+  }
 
   //* Set the smart contract and provider to the state
   useEffect(() => {
     const setSmartContractAndProvider = async () => {
-    //   const web3Modal = new Web3Modal();
-    //   const connection = await web3Modal.connect();
-    //   const newProvider = new ethers.providers.Web3Provider(connection);
-    //   const signer = newProvider.getSigner();
-    //   const newContract = new ethers.Contract(ADDRESS, ABI, signer);
 
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
@@ -108,6 +113,21 @@ export const GlobalContextProvider = ({ children }) => {
 //     }
 //   }, [step]);
 
+
+//* Activate event listeners for the smart contract
+useEffect(()=>{
+    if(contract){
+        createEventListeners({
+            navigate,
+            contract,
+            provider,
+            walletAddress,
+            setShowAlert,
+           
+        })
+    }
+},[contract])
+
   //* Set the game data to the state
 //   useEffect(() => {
 //     const fetchGameData = async () => {
@@ -131,7 +151,7 @@ export const GlobalContextProvider = ({ children }) => {
 //     fetchGameData();
 //   }, [contract, updateGameData]);
 
-  //* Handle alerts
+  //* Handling alerts
   useEffect(() => {
     if (showAlert?.status) {
       const timer = setTimeout(() => {
@@ -169,6 +189,7 @@ export const GlobalContextProvider = ({ children }) => {
         
         errorMessage,
         setErrorMessage,
+        connectWallet
       }}
     >
       {children}

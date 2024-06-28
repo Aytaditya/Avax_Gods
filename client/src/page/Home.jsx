@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PageHOC } from '../components';
 
 import {useGlobalContext} from "../context";
@@ -9,7 +9,7 @@ import {toast} from 'react-hot-toast';
 
 const Home = () => {
 
-  const {contract,walletAddress,setShowAlert}=useGlobalContext();
+  const {contract,walletAddress,setShowAlert,connectWallet}=useGlobalContext();
 
   const [playerName,setPlayerName]=useState("");
 
@@ -34,7 +34,7 @@ const Home = () => {
         const playerExists=await contract.isPlayer(walletAddress);
 
         if(playerExists){
-          throw new Error(`Player already registered 🧛`)
+          throw new Error(`Wallet already registered 🧛`)
         }
 
 
@@ -45,7 +45,7 @@ const Home = () => {
 
           
           setLoading(false);
-          toast.success(`${playerName} is being called 😈`)
+          toast.success(`${playerName} is being called!!!😈`)
         }
       
         
@@ -60,12 +60,17 @@ const Home = () => {
   return (
     <div className='flex flex-col '>
 
-      <CustomInput Label="Name" placeholder="Enter Your Name" value={playerName} handleValueChange={setPlayerName}/>
+      {walletAddress && (
+        <CustomInput Label="Name" placeholder="Enter Your Name" value={playerName} handleValueChange={setPlayerName}/>
+      )}
 
      
-        {!loading && <CustomButton title="Register" handleClick={handleClick} restStyles="mt-6" disabled={false}/>}
+        {!loading && walletAddress && (<CustomButton title="Register" handleClick={handleClick} restStyles="mt-6" disabled={false}/>)}
 
-        {loading && <CustomButton title="Registering..." restStyles="mt-6" disabled={true}/>}
+        {loading &&  (<CustomButton title="Registering..." restStyles="mt-6" disabled={true}/>)}
+
+        {!walletAddress && (<CustomButton title="Connect your Wallet" handleClick={connectWallet} restStyles="mt-10"/>)}
+
 
 
       

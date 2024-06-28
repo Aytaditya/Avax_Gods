@@ -27,10 +27,11 @@ const PageHOC = (Component, title, description) => () => {
 
           <Component />
 
-        <div className='flex justify-end items-end mt-2'>
-        <p className={`${styles.footerText}`}>A Blockchain powered Game 💜</p>
-        </div>
+       
 
+        </div>
+        <div className='flex justify-end items-end mt-[-50px]'>
+        <p className={`${styles.footerText}`}>A Blockchain powered Game 💜</p>
         </div>
       </div>
 
