@@ -1,23 +1,16 @@
-import { createContext, useContext,useState,useEffect,useRef } from "react";
-
-import {ethers} from "ethers";
-
+import { createContext, useContext, useState, useEffect, useRef } from "react";
+import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { useNavigate } from "react-router-dom";
-
-import {ABI, ADDRESS} from "../contract/index";
-
-import {createEventListeners} from "../context/createEventListners";
-
-
+import { ABI, ADDRESS } from "../contract/index";
+import { createEventListeners } from "../context/createEventListners";
 
 const GlobalContext = createContext();
-
 const { ethereum } = window;
 
 export const GlobalContextProvider = ({ children }) => {
   const [walletAddress, setWalletAddress] = useState('');
-  const [battleGround, setBattleGround] = useState('bg-astral');
+  const [battleGround, setBattleGround] = useState(localStorage.getItem('battleground') || 'bg-astral');
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [step, setStep] = useState(1);
@@ -29,73 +22,100 @@ export const GlobalContextProvider = ({ children }) => {
 
   const player1Ref = useRef();
   const player2Ref = useRef();
-
   const navigate = useNavigate();
 
-  //* Set battleground to local storage
-//   useEffect(() => {
-//     const isBattleground = localStorage.getItem('battleground');
-
-//     if (isBattleground) {
-//       setBattleGround(isBattleground);
-//     } else {
-//       localStorage.setItem('battleground', battleGround);
-//     }
-//   }, []);
-
-  //* Reset web3 onboarding modal params
-  useEffect(() => {
-    // const resetParams = async () => {
-    // //   const currentStep = await GetParams();
-
-    //   setStep(currentStep.step);
-    // };
-
-    // resetParams();
-
-    window?.ethereum?.on('chainChanged', () => resetParams());
-    window?.ethereum?.on('accountsChanged', () => resetParams());
-  }, []);
-
-  //* Set the wallet address to the state
-  const updateCurrentWalletAddress = async () => {
-    const accounts = await window?.ethereum?.request({ method: 'eth_requestAccounts' });
-
-    if (accounts){
-        setWalletAddress(accounts[0]);
-    } 
+  // Function to store data in local storage with expiry
+  const storeWithExpiry = (key, value, ttl) => {
+    const now = new Date();
+    const item = {
+      value: value,
+      expiry: now.getTime() + ttl,
+    };
+    localStorage.setItem(key, JSON.stringify(item));
   };
 
-  // useEffect(() => {
-  //   updateCurrentWalletAddress();
+  // Function to retrieve data from local storage with expiry check
+  const retrieveWithExpiry = (key) => {
+    const itemStr = localStorage.getItem(key);
+    if (!itemStr) {
+      return null;
+    }
+    try {
+      const item = JSON.parse(itemStr);
+      const now = new Date();
+      if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return null;
+      }
+      return item.value;
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+      return null;
+    }
+  };
 
-  //   window?.ethereum?.on('accountsChanged', updateCurrentWalletAddress);
-  // }, []);
+  useEffect(() => {
+    const handleAccountsChanged = (accounts) => {
+      if (accounts.length > 0) {
+        setWalletAddress(accounts[0]);
+        storeWithExpiry('walletAddress', accounts[0], 24 * 60 * 60 * 1000); // 1 day expiry
+      } else {
+        setWalletAddress('');
+        localStorage.removeItem('walletAddress');
+      }
+    };
 
-  const connectWallet = async () => { 
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+    }
 
-    updateCurrentWalletAddress();
-    window?.ethereum?.on('accountsChanged', updateCurrentWalletAddress);
-  }
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      }
+    };
+  }, []);
 
-  //* Set the smart contract and provider to the state
+  const updateCurrentWalletAddress = async () => {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    if (accounts.length > 0) {
+      setWalletAddress(accounts[0]);
+      storeWithExpiry('walletAddress', accounts[0], 24 * 60 * 60 * 1000); // 1 day expiry
+    }
+  };
+
+  useEffect(() => {
+    const storedWalletAddress = retrieveWithExpiry('walletAddress');
+    if (storedWalletAddress) {
+      setWalletAddress(storedWalletAddress);
+    } else {
+      updateCurrentWalletAddress();
+    }
+  }, []);
+
   useEffect(() => {
     const setSmartContractAndProvider = async () => {
-
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
       const newContract = new ethers.Contract(ADDRESS, ABI, signer);
-
-        setProvider(provider);
-        setContract(newContract);
-
+      setProvider(provider);
       setContract(newContract);
-
     };
 
     setSmartContractAndProvider();
-    
   }, []);
+
+  useEffect(() => {
+    if (contract) {
+      createEventListeners({
+        navigate,
+        contract,
+        provider,
+        walletAddress,
+        setShowAlert,
+      });
+    }
+  }, [contract]);
 
   //* Activate event listeners for the smart contract
 //   useEffect(() => {
@@ -189,7 +209,7 @@ useEffect(()=>{
         
         errorMessage,
         setErrorMessage,
-        connectWallet
+        // connectWallet
       }}
     >
       {children}
