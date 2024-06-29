@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Home from './page/Home';
 import { CreateBattle } from './page';
+import JoinBattle from './page/JoinBattle';
 import './index.css';
 
 import { GlobalContextProvider } from './context';
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/create-battle" element={<CreateBattle />} />
+      <Route path="/join-battle" element={<JoinBattle />} />
     </Routes>
     </GlobalContextProvider>
   </BrowserRouter>,

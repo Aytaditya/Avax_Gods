@@ -210,6 +210,8 @@ useEffect(()=>{
         errorMessage,
         setErrorMessage,
         // connectWallet
+        battleName,
+        setBattleName,
       }}
     >
       {children}
