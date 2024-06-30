@@ -6,11 +6,12 @@ import { PageHOC } from "../components"
 import styles from "../styles"
 
 const JoinBattle = () => {
+    const navigate = useNavigate()
   return (
-    <div>
-        
-      
-    </div>
+    <>
+    <h2 className={styles.joinHeadText}>Available Battles:</h2>
+    <p className={styles.infoText} onClick={()=>navigate("/create-battle")}>or Create a new Battle</p>
+    </>
   )
 }
 

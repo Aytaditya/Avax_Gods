@@ -6,7 +6,7 @@ import { useGlobalContext } from '../context';
 import { logo, heroImg } from '../assets';
 import styles from '../styles';
 
-import { Toaster } from 'react-hot-toast';
+import { Toaster,ToastBar } from 'react-hot-toast';
 
 const PageHOC = (Component, title, description) => () => {
   const { showAlert } = useGlobalContext();
@@ -14,7 +14,19 @@ const PageHOC = (Component, title, description) => () => {
 
   return (
     <div className={styles.hocContainer}>
-        <Toaster/>
+
+      <Toaster>
+        {(t) => (
+          <ToastBar
+            toast={t}
+            style={{
+              ...t.style,
+              animation: t.visible ? 'custom-enter 1s ease' : 'custom-exit 1s ease',
+            }}
+          />
+        )}
+      </Toaster>
+
       <div className={styles.hocContentBox}>
         <img src={logo} alt="logo" className={styles.hocLogo} onClick={() => navigate('/')} />
 
@@ -27,11 +39,11 @@ const PageHOC = (Component, title, description) => () => {
 
           <Component />
 
-       
+
 
         </div>
-        <div className='flex justify-end items-end mt-[-50px]'>
-        <p className={`${styles.footerText}`}>A Blockchain powered Game 💜</p>
+        <div className='flex justify-end items-end mt-[-100px]'>
+          <p className={`${styles.footerText}`}>A Blockchain powered Game 💜</p>
         </div>
       </div>
 

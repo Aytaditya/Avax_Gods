@@ -3,7 +3,7 @@ const styles = {
   headText: 'font-rajdhani font-bold text-white sm:text-6xl text-4xl mt-7',
   normalText: 'font-rajdhani font-light text-[24px] text-siteWhite',
   footerText: 'font-rajdhani font-medium text-base text-white',
-  infoText: 'font-rajdhani font-medium text-lg text-siteViolet cursor-pointer ',
+  infoText: 'font-rajdhani font-medium text-lg text-siteViolet cursor-pointer hover:underline ',
 
   // glassmorphism
   glassEffect: 'bg-white backdrop-filter backdrop-blur-lg bg-opacity-10',
