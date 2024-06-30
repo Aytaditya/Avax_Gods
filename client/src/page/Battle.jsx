@@ -13,6 +13,7 @@ import PlayerInfo from "../components/PlayerInfo"
 import Card from "../components/Card"
 import GameInfo from "../components/GameInfo"
 
+
 const Battle = () => {
   const { contract, gameData, walletAddress, showAlert, setShowAlert, battleGround } = useGlobalContext();
 
@@ -34,16 +35,20 @@ const Battle = () => {
         if (gameData.activeBattle.players[0].toLowerCase() === walletAddress.toLowerCase()) {
           player01Address = walletAddress;
           player02Address = gameData.activeBattle.players[1];
+          console.log(player01Address, player02Address)
         }
         else {
           player01Address = gameData.activeBattle.players[0];
           player02Address = walletAddress;
+          console.log(player01Address, player02Address)
         }
 
         const p1Token = await contract.getPlayerToken(player01Address);
 
         const player01 = await contract.getPlayer(player01Address);
+        console.log(player01)
         const player02 = await contract.getPlayer(player02Address);
+        console.log(player02)
 
         const p1Att = p1Token.attackStrength.toNumber();
         const p1Def = p1Token.defenseStrength.toNumber();
@@ -76,22 +81,24 @@ const Battle = () => {
       <div className={`${styles.flexBetween} ${styles.gameContainer} ${battleGround}`}>
 
 
-        <PlayerInfo player={player2} playerIcon={player02Icon} mt />
+        <PlayerInfo player={player2} playerIcon={player02Icon} mt="mt" />
 
-        <div className={`${styles.flexCenter} flex-col my-10`}>
+        <div className={`${styles.flexCenter} flex-col my-[0px]`}>
+          <div className="mr-3">
           <Card
-            card={player2}
-            title={player2?.playerName}
+            card={player2.attack}
+            title={player2.playerName}
             cardRef=''
-            playerTwo />
+            playerTwo="playerTwo" />
+          </div>
 
 
           <div className={`flex items-center flex-row`}>
             <ActionButton imgUrl={attack} handleClick={() => { }} restStyles="mr-2 hover:border-yellow-400" />
 
             <Card
-              card={player1}
-              title={player1?.playerName}
+              card={player1.attack}
+              title={player1.playerName}
               cardRef=''
               restStyles="mt-3"
             />
@@ -103,7 +110,7 @@ const Battle = () => {
 
         </div>
 
-        <PlayerInfo player={player1} playerIcon={player01Icon} mt/>
+        <PlayerInfo player={player1} playerIcon={player01Icon} />
 
         <GameInfo/>
 

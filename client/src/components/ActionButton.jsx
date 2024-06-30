@@ -1,9 +1,12 @@
 import React from 'react'
 
-const ActionButton = () => {
+import styles from '../styles'
+
+
+const ActionButton = ({imgUrl,handleClick,restStyles}) => {
   return (
-    <div>
-      button
+    <div className={`${styles.gameMoveBox} ${styles.flexCenter} ${styles.glassEffect} ${restStyles}`}>
+      <img src={imgUrl} alt="Action Buttons" className={styles.gameMoveIcon} />
     </div>
   )
 }
