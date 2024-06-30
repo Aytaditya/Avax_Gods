@@ -3,3 +3,5 @@
 ![Home Image](./home.png)
 
 ![Player Waiting Area](./wait.png)
+
+![BattleGround Image](./battleground.png)
