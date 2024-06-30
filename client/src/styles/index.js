@@ -62,7 +62,7 @@ const styles = {
   gameLoadPlayersBox: 'flex justify-evenly items-center mt-20',
   gameLoadPlayerImg: 'md:w-36 w-24 md:h-36 h-24 object-contain rounded-full drop-shadow-lg',
   gameLoadPlayerText: 'mt-3 font-rajdhani text-white md:text-xl text-base',
-  gameLoadVS: 'font-rajdhani font-extrabold text-siteViolet text-7xl mx-16',
+  gameLoadVS: 'font-rajdhani font-extrabold text-[pink] text-7xl mx-16',
 
   // gameInfo component
   gameInfoIconBox: 'absolute right-2 top-1/2',

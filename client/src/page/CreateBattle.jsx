@@ -15,7 +15,7 @@ const CreateBattle = () => {
 
   const {contract,battleName,setBattleName}=useGlobalContext();
 
-  const [waitBattle,setWaitBattle]=useState(false);
+  const [waitBattle,setWaitBattle]=useState(true);
 
   const handleClick=async()=>{
     if(!battleName || !battleName.trim()){
