@@ -4,6 +4,8 @@
 
 ![Player Waiting Area](./wait.png)
 
+## Game Rules
+'''
 1.Card with the same defense and attack point will cancel each other out.
 
 2.Attack points from the attacking card will deduct the opposing player’s health points.
@@ -15,5 +17,7 @@
 5.If a player defends, they refill 3 Mana
 
 6.If a player attacks, they spend 3 Mana
+
+'''
 
 ![BattleGround Image](./battleground.png)
