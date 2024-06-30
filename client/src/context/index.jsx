@@ -14,7 +14,11 @@ export const GlobalContextProvider = ({ children }) => {
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [step, setStep] = useState(1);
+
+
   const [gameData, setGameData] = useState({ players: [], pendingBattles: [], activeBattle: null });
+
+
   const [showAlert, setShowAlert] = useState({ status: false, type: 'info', message: '' });
   const [battleName, setBattleName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -171,6 +175,38 @@ useEffect(()=>{
 //     fetchGameData();
 //   }, [contract, updateGameData]);
 
+
+//* Set the game data to the state
+useEffect(()=>{
+
+  const fetchGameData=async()=>{
+
+    const fetchBattles=await contract.getAllBattles();
+    console.log(fetchBattles);
+
+    const pendingBattles=fetchBattles.filter((battle)=>battle.battleStatus===0); //0 means pending battle
+
+    let activeBattle=null;
+
+    fetchBattles.forEach((battle)=>{
+      if(battle.players.find((player)=>player.toLowerCase()===walletAddress.toLowerCase())){
+        if(battle.winner.startsWith('0x00')){ //0x00 means no winner and hence battle is still active
+          activeBattle=battle;
+
+        }
+      }
+    })
+
+    setGameData({pendingBattles:pendingBattles.slice(1),activeBattle});
+    
+  }
+
+  if(contract){
+    fetchGameData();
+  }
+
+},[contract])
+
   //* Handling alerts
   useEffect(() => {
     if (showAlert?.status) {
@@ -212,6 +248,7 @@ useEffect(()=>{
         // connectWallet
         battleName,
         setBattleName,
+        gameData,
       }}
     >
       {children}

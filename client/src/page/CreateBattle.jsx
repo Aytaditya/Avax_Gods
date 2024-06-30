@@ -13,9 +13,17 @@ import GameLoad from '../components/GameLoad';
 const CreateBattle = () => {
   const navigate=useNavigate();
 
-  const {contract,battleName,setBattleName}=useGlobalContext();
+  const {contract,battleName,setBattleName,gameData}=useGlobalContext();
 
-  const [waitBattle,setWaitBattle]=useState(true);
+  const [waitBattle,setWaitBattle]=useState(false);
+
+  const [loading,setLoading]=useState(false);
+
+  useEffect(()=>{
+    if(gameData?.activeBattle?.battleStatus===0){
+      setWaitBattle(true);
+    }
+  },[gameData]);
 
   const handleClick=async()=>{
     if(!battleName || !battleName.trim()){
@@ -25,9 +33,10 @@ const CreateBattle = () => {
 
     try {
 
-      await contract.methods.createBattle(battleName);
+      await contract.createBattle(battleName);
 
       setWaitBattle(true);
+      toast.success("Battle Created Successfully 🎉");
       
     } catch (error) {
       console.log(error.message);
@@ -42,7 +51,13 @@ const CreateBattle = () => {
 
       <CustomInput Label="Start Battle" placeholder="Enter Battle Name" value={battleName} handleValueChange={setBattleName}/>
 
-      <CustomButton title="Create Battle" handleClick={handleClick} restStyles="mt-3"/>
+      {!loading && (
+        <CustomButton title="Create Battle" handleClick={handleClick} restStyles="mt-3"/>
+      )}
+
+      {loading && (
+        <CustomButton title="Creating Battle..." restStyles="mt-3" disabled={true}/>
+      )}
 
     </div>
 
