@@ -10,18 +10,23 @@ const { ethereum } = window;
 
 export const GlobalContextProvider = ({ children }) => {
   const [walletAddress, setWalletAddress] = useState('');
-  const [battleGround, setBattleGround] = useState(localStorage.getItem('battleground') || 'bg-astral');
+
+  const [battleGround, setBattleGround] = useState('bg-astral');
+
+
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [step, setStep] = useState(1);
 
-
+  // game data state to store all the pending and existing battles
   const [gameData, setGameData] = useState({ players: [], pendingBattles: [], activeBattle: null });
 
 
   const [showAlert, setShowAlert] = useState({ status: false, type: 'info', message: '' });
   const [battleName, setBattleName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+
   const [updateGameData, setUpdateGameData] = useState(0);
 
   const player1Ref = useRef();
@@ -109,17 +114,7 @@ export const GlobalContextProvider = ({ children }) => {
     setSmartContractAndProvider();
   }, []);
 
-  useEffect(() => {
-    if (contract) {
-      createEventListeners({
-        navigate,
-        contract,
-        provider,
-        walletAddress,
-        setShowAlert,
-      });
-    }
-  }, [contract]);
+
 
   //* Activate event listeners for the smart contract
 //   useEffect(() => {
@@ -147,6 +142,7 @@ useEffect(()=>{
             provider,
             walletAddress,
             setShowAlert,
+            setUpdateGameData
            
         })
     }
@@ -205,7 +201,7 @@ useEffect(()=>{
     fetchGameData();
   }
 
-},[contract])
+},[contract,updateGameData])
 
   //* Handling alerts
   useEffect(() => {
@@ -249,6 +245,8 @@ useEffect(()=>{
         battleName,
         setBattleName,
         gameData,
+        battleGround,
+        setBattleGround
       }}
     >
       {children}

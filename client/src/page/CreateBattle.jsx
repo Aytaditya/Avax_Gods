@@ -13,7 +13,7 @@ import GameLoad from '../components/GameLoad';
 const CreateBattle = () => {
   const navigate=useNavigate();
 
-  const {contract,battleName,setBattleName,gameData}=useGlobalContext();
+  const {contract,battleName,setBattleName,gameData,walletAddress}=useGlobalContext();
 
   const [waitBattle,setWaitBattle]=useState(false);
 
@@ -62,6 +62,8 @@ const CreateBattle = () => {
     </div>
 
     <p className={styles.infoText} onClick={()=>navigate("/join-battle")}>or Join Already Existing Battles</p>
+
+
      
     </>
   )
