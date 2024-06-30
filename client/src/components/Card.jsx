@@ -10,6 +10,9 @@ const img1=generateRandomCard()
 const img2=generateRandomCard()
 
 const Card = ({card,title,restStyles,cardRef,playerTwo}) => {
+
+  const tie = (title || "").toUpperCase(); 
+  console.log(tie)
  
   return (
     <Tilt>
@@ -17,16 +20,16 @@ const Card = ({card,title,restStyles,cardRef,playerTwo}) => {
       <div className={`relative   z-0 transition-all ${restStyles}`}>
       <img src={playerTwo ? img2 : img1} alt="Card Image" className={styles.cardImg}/>
 
-      <div className={`${styles.cardPointContainer} sm:left-[14%] sm:bottom-[25%] left-[22%] ${styles.flexCenter}`}>
+      <div className={`${styles.cardPointContainer} sm:left-[17%] sm:bottom-[27%] left-[22%] ${styles.flexCenter}`}>
         <p className={`${styles.cardPoint} text-yellow-400 `}>{card}</p>
       </div>
 
-      <div className={`${styles.cardPointContainer} sm:left-[63%] sm:bottom-[25%] left-[22%] ${styles.flexCenter}`}>
+      <div className={`${styles.cardPointContainer} sm:left-[66%] sm:bottom-[27%] left-[22%] ${styles.flexCenter}`}>
         <p className={`${styles.cardPoint} text-red-700 `}>{card}</p>
       </div>
 
       <div className={`${styles.cardTextContainer} ${styles.flexCenter}`}>
-        <p className={styles.cardText1}>{title}</p>
+        <p className={styles.cardText1}>{tie}</p>
       </div>
       
       

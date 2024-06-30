@@ -42,7 +42,7 @@ const styles = {
 
   // card component
   cardContainer: 'relative sm:w-[260px] w-[220px] sm:h-[200px] h-[280px] z-0 transition-all',
-  cardImg: 'w-full h-[170px] object-contain',
+  cardImg: 'w-full h-[220px] object-contain',
   cardPointContainer: 'absolute sm:w-[40px] w-[32px] sm:h-[40px] h-[32px] rounded-[25px] bottom-[31.4%]',
   cardPoint: 'font-rajdhani text-[20px] font-bold',
   cardTextContainer: 'absolute w-full bottom-[13.5%] left-3',
