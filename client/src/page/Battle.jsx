@@ -15,7 +15,7 @@ import GameInfo from "../components/GameInfo"
 
 
 const Battle = () => {
-  const { contract, gameData, walletAddress, showAlert, setShowAlert, battleGround,errorMessage } = useGlobalContext();
+  const { contract, gameData, walletAddress, player1Ref,player2Ref, battleGround,errorMessage } = useGlobalContext();
 
   const [player1, setPlayer1] = useState({});
   const [player2, setPlayer2] = useState({});
@@ -92,6 +92,16 @@ const Battle = () => {
     }
   }
 
+  useEffect(()=>{
+    const timer=setTimeout(()=>{
+      if(!gameData.activeBattle){
+        navigate("/")
+      }
+    },[2000])
+
+    return ()=>clearTimeout(timer)
+  },[])
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -106,7 +116,7 @@ const Battle = () => {
             card={player2.attack}
             cardDef={player2.def}
             title={player2.playerName}
-            cardRef=''
+            cardRef={player2Ref}
             playerTwo="playerTwo" />
           </div>
 
@@ -118,7 +128,7 @@ const Battle = () => {
               card={player1.attack}
               cardDef={player1.def}
               title={player1.playerName}
-              cardRef=''
+              cardRef={player1Ref}
               restStyles="mt-3"
             />
 

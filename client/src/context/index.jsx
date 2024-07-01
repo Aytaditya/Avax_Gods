@@ -168,14 +168,16 @@ export const GlobalContextProvider = ({ children }) => {
 
 //* Activate event listeners for the smart contract
 useEffect(()=>{
-    if(contract && step===-1){
+    if(contract ){
         createEventListeners({
             navigate,
             contract,
             provider,
             walletAddress,
             setShowAlert,
-            setUpdateGameData
+            setUpdateGameData,
+            player1Ref,
+            player2Ref,
            
         })
     }
@@ -281,7 +283,9 @@ useEffect(()=>{
         setBattleName,
         gameData,
         battleGround,
-        setBattleGround
+        setBattleGround,
+        player1Ref,
+        player2Ref,
       }}
     >
       {children}

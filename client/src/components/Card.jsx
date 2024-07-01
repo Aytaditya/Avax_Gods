@@ -17,7 +17,7 @@ const Card = ({card,title,restStyles,cardRef,playerTwo,cardDef}) => {
   return (
     <Tilt>
 
-      <div className={`relative   z-0 transition-all ${restStyles}`}>
+      <div ref={cardRef} className={`relative   z-0 transition-all ${restStyles}`}>
       <img src={playerTwo ? img2 : img1} alt="Card Image" className={styles.cardImg}/>
 
       <div className={`${styles.cardPointContainer} sm:left-[18%] sm:bottom-[28%] left-[22%] ${styles.flexCenter}`}>

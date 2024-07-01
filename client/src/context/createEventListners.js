@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 import {toast} from 'react-hot-toast';
 
+import { playAudio, sparcle } from '../utils/animation.js';
+import { defenseSound } from '../assets';
+
 
 
 const addNewEvent=(eventFilter,provider,cb)=>{
@@ -16,9 +19,20 @@ const addNewEvent=(eventFilter,provider,cb)=>{
 
         cb(parsedLog);
     })
+    
 }
 
-export const createEventListeners = ({navigate,contract,provider,walletAddress,setShowAlert,setUpdateGameData}) => {
+const emptyAccount = '0x0000000000000000000000000000000000000000';
+
+const getCoords=(cardRef)=>{
+    const {left,top,width,height}=cardRef.current.getBoundingClientRect(); //getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
+    return{
+        pageX:left+width/2,
+        pageY:top+height/2.25  // this is for the animations to be in the center of the card
+    }
+}
+
+export const createEventListeners = ({navigate,contract,provider,walletAddress,setShowAlert,setUpdateGameData,player1Ref,player2Ref}) => {
     const NewPlayerEventFilter=contract.filters.NewPlayer();
     addNewEvent(NewPlayerEventFilter,provider,({args})=>{
         console.log("New Player Created",args)
@@ -47,5 +61,27 @@ export const createEventListeners = ({navigate,contract,provider,walletAddress,s
     addNewEvent(BattleMoveEventFilter, provider, ({ args }) => {
       console.log('Battle move initiated!', args);
     });
+
+    const RoundEndedEventFilter=contract.filters.RoundEnded();
+    addNewEvent(RoundEndedEventFilter,provider,({args})=>{
+        console.log("Round Ended",args,walletAddress);
+
+
+        for(let i=0;i<args.damagedPlayers.length;i++){
+            if(args.damagedPlayers[i]!=emptyAccount ){
+                if(args.damagedPlayers[i]===walletAddress){
+                   sparcle(getCoords(player1Ref))
+                }
+                else if(args.damagedPlayers[i]!=walletAddress){
+                    sparcle(getCoords(player2Ref))
+                }
+            }
+            else{
+                playAudio(defenseSound)
+            }
+        }
+
+        setUpdateGameData((prevUpdateGameData)=>prevUpdateGameData+1);
+    })
   
 }
