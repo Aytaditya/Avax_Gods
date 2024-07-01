@@ -109,6 +109,8 @@ Before you begin, ensure you have met the following requirements:
 
 ![Battle](./battleground2.png)
 
+![Battle](./battleground3.png)
+
 ## Game Rules
 
 1. **Card with the same defense and attack points will cancel each other out**: When two cards with identical attack and defense points clash, they both are nullified.
@@ -148,6 +150,10 @@ We welcome contributions to Avax-Gods! To contribute, please follow these steps:
 - Docker is integrated into the frontend for streamlined development and deployment.
 
 ![Modal](./modal.png)
+
+![Modal](./modal1.png)
+
+![Modal](./modal2.png)
 
 
 
