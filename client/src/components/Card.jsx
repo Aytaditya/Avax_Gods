@@ -9,7 +9,7 @@ const generateRandomCard=()=>{
 const img1=generateRandomCard()
 const img2=generateRandomCard()
 
-const Card = ({card,title,restStyles,cardRef,playerTwo}) => {
+const Card = ({card,title,restStyles,cardRef,playerTwo,cardDef}) => {
 
   const tie = (title || "").toUpperCase(); 
   console.log(tie)
@@ -25,7 +25,7 @@ const Card = ({card,title,restStyles,cardRef,playerTwo}) => {
       </div>
 
       <div className={`${styles.cardPointContainer} sm:left-[67%] sm:bottom-[28%] left-[22%] ${styles.flexCenter}`}>
-        <p className={`${styles.cardPoint} text-red-700 `}>{card}</p>
+        <p className={`${styles.cardPoint} text-red-700 `}>{cardDef}</p>
       </div>
 
       <div className={`${styles.cardTextContainer} ${styles.flexCenter}`}>

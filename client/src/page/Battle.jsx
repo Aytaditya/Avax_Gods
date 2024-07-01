@@ -15,7 +15,7 @@ import GameInfo from "../components/GameInfo"
 
 
 const Battle = () => {
-  const { contract, gameData, walletAddress, showAlert, setShowAlert, battleGround } = useGlobalContext();
+  const { contract, gameData, walletAddress, showAlert, setShowAlert, battleGround,errorMessage } = useGlobalContext();
 
   const [player1, setPlayer1] = useState({});
   const [player2, setPlayer2] = useState({});
@@ -33,15 +33,13 @@ const Battle = () => {
 
         //setting wallet address equal to 1 or 2 based on the wallet address
         if (gameData.activeBattle.players[0].toLowerCase() === walletAddress.toLowerCase()) {
-          player01Address = walletAddress;
-          player02Address = gameData.activeBattle.players[1];
-          console.log(player01Address, player02Address)
-        }
-        else {
           player01Address = gameData.activeBattle.players[0];
-          player02Address = walletAddress;
-          console.log(player01Address, player02Address)
+          player02Address = gameData.activeBattle.players[1];
+        } else {
+          player01Address = gameData.activeBattle.players[1];
+          player02Address = gameData.activeBattle.players[0];
         }
+
 
         const p1Token = await contract.getPlayerToken(player01Address);
 
@@ -75,9 +73,28 @@ const Battle = () => {
 
   }, [contract, gameData, battleName])
 
+
+  const makeAMove=async(move)=>{
+    playAudio(move===1?attackSound:defenseSound)
+    try {
+
+      await contract.attackOrDefendChoice(move,battleName);
+      toast.success(`Initating ${move===1 ? 'Attack' : 'Defense'}🎉`)
+
+      
+    } catch (error) {
+      console.log(error.message)
+      if(errorMessage.length>0){
+        toast.error(errorMessage)
+      }
+      toast.error("Some Error  while making move 🥹")
+      
+    }
+  }
+
   return (
     <>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className={`${styles.flexBetween} ${styles.gameContainer} ${battleGround}`}>
 
 
@@ -87,6 +104,7 @@ const Battle = () => {
           <div className="mr-3">
           <Card
             card={player2.attack}
+            cardDef={player2.def}
             title={player2.playerName}
             cardRef=''
             playerTwo="playerTwo" />
@@ -94,16 +112,17 @@ const Battle = () => {
 
 
           <div className={`flex items-center flex-row`}>
-            <ActionButton imgUrl={attack} handleClick={() => { }} restStyles="mr-2 hover:border-yellow-400" />
+            <ActionButton imgUrl={attack} handleClick={() => {makeAMove(1) }} restStyles="mr-2 hover:border-yellow-400" />
 
             <Card
               card={player1.attack}
+              cardDef={player1.def}
               title={player1.playerName}
               cardRef=''
               restStyles="mt-3"
             />
 
-            <ActionButton imgUrl={defense} handleClick={() => { }} restStyles="ml-6 hover:border-red-600" />
+            <ActionButton imgUrl={defense} handleClick={() => {makeAMove(2) }} restStyles="ml-6 hover:border-red-600" />
 
           </div>
 

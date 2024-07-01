@@ -8,6 +8,8 @@ import JoinBattle from './page/JoinBattle';
 import Battle from './page/Battle';
 import Battleground from './page/Battleground';
 
+ import OnboardModal from "./components/OnboardModal"
+
 import './index.css';
 
 import { GlobalContextProvider } from './context';
@@ -15,6 +17,7 @@ import { GlobalContextProvider } from './context';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
   <GlobalContextProvider>
+    <OnboardModal />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/create-battle" element={<CreateBattle />} />

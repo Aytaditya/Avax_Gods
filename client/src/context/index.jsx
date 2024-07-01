@@ -4,6 +4,8 @@ import Web3Modal from "web3modal";
 import { useNavigate } from "react-router-dom";
 import { ABI, ADDRESS } from "../contract/index";
 import { createEventListeners } from "../context/createEventListners";
+import { GetParams } from "../utils/onboard";
+import toast from "react-hot-toast";
 
 const GlobalContext = createContext();
 const { ethereum } = window;
@@ -80,6 +82,20 @@ export const GlobalContextProvider = ({ children }) => {
         }
   },[])
 
+
+  // reset web3 on boarding modal
+  useEffect(()=>{
+
+    const resetParams=async()=>{
+      const currentStep=await GetParams();
+      setStep(currentStep);
+    }
+    resetParams();
+    window?.ethereum?.on('chainChanged', ()=>resetParams());
+    window?.ethereum?.on('accountsChanged', ()=>resetParams());
+  },[])
+
+
   useEffect(() => {
     const handleAccountsChanged = (accounts) => {
       if (accounts.length > 0) {
@@ -152,7 +168,7 @@ export const GlobalContextProvider = ({ children }) => {
 
 //* Activate event listeners for the smart contract
 useEffect(()=>{
-    if(contract){
+    if(contract && step===-1){
         createEventListeners({
             navigate,
             contract,
@@ -163,7 +179,7 @@ useEffect(()=>{
            
         })
     }
-},[contract])
+},[contract,step])
 
   //* Set the game data to the state
 //   useEffect(() => {
@@ -231,20 +247,22 @@ useEffect(()=>{
     }
   }, [showAlert]);
 
-  //* Handle error messages
-//   useEffect(() => {
-//     if (errorMessage) {
-//       const parsedErrorMessage = errorMessage?.reason?.slice('execution reverted: '.length).slice(0, -1);
+ //  Handle error messages
+  useEffect(() => {
+    if (errorMessage) {
+      const parsedErrorMessage = errorMessage?.reason?.slice('execution reverted: '.length).slice(0, -1);
 
-//       if (parsedErrorMessage) {
-//         setShowAlert({
-//           status: true,
-//           type: 'failure',
-//           message: parsedErrorMessage,
-//         });
-//       }
-//     }
-//   }, [errorMessage]);
+      if (parsedErrorMessage) {
+        setShowAlert({
+          status: true,
+          type: 'failure',
+          message: parsedErrorMessage,
+        });
+      }
+      setErrorMessage("Move Already Made wait for Oponnent to make move")
+      toast.error(parsedErrorMessage);
+    }
+  }, [errorMessage]);
 
   return (
     <GlobalContext.Provider
