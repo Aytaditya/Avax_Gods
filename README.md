@@ -1,7 +1,7 @@
 
-# Avax-Gods
+# Avax Gods
 
-Welcome to **Avax-Gods**, where blockchain technology meets the thrill of NFT card gaming! Avax-Gods is an innovative project that allows users to immerse themselves in a world of strategy and competition. By connecting your Core or MetaMask wallet, you can create battles or join existing ones with ease. Engage in intense battles where every move counts.
+Welcome to **Avax-Gods**, where blockchain technology meets the thrill of decentralized gaming! Avax-Gods is an innovative project that allows users to immerse themselves in a world of strategy and competition. By connecting your Core or MetaMask wallet, you can create battles or join existing ones with ease. Engage in intense battles where every move counts.
 
 ![Home Image](./home.png)
 
@@ -18,6 +18,7 @@ Welcome to **Avax-Gods**, where blockchain technology meets the thrill of NFT ca
   - [Joining a Battle](#joining-a-battle)
   - [Battle Mechanics](#battle-mechanics)
 - [Game Rules](#game-rules)
+- [Tech Stack](#tech-stack)
 - [Contributing](#contributing)
 - [Notes](#notes)
 
@@ -36,6 +37,7 @@ Avax-Gods is a strategic NFT card game built on blockchain technology. Players c
 - **Interactive Battle animations and sounds**: Engaging battle animations and sounds with interactive toasts add excitement and vibrancy to the game.
 - **Strategy & Competition**: Plan your moves carefully to defeat your opponents.
 - **Community Engagement**: Join a vibrant community of gamers and NFT enthusiasts.
+- **Exiting Battle**: You can also exit the battle. 
 
 ![Battleground Options](./options.png)
 
@@ -57,7 +59,7 @@ Before you begin, ensure you have met the following requirements:
 
 2. Navigate to the project directory:
     ```bash
-    cd avax-gods
+    cd Avax-Gods
     ```
 
 3. Install the dependencies:
@@ -69,10 +71,10 @@ Before you begin, ensure you have met the following requirements:
 
 1. Start the development server:
     ```bash
-    npm start
+    npm run dev
     ```
 
-2. Open your browser and go to `http://localhost:3000` to see the application in action.
+2. Open your browser and go to `http://localhost:5173` to see the application in action.
 
 ## Gameplay
 
@@ -93,10 +95,15 @@ Before you begin, ensure you have met the following requirements:
 3. Select a battle to join.
 4. Confirm your participation.
 
+![Joining a Battle](./join.png)
+
 ### Battle Mechanics
 
 - **Random Card Allocation**: Each player is given a card with random attack and defense values.
 - **Decision Making**: Based on the card values, players can choose to either attack or defend.
+- **Player Health**: Each player has a health of 25 points.
+- **Hidden Opponent Values**: You cannot see your opponent's attack and defense values. Strategize your moves based on your card's values and anticipate your opponent's actions.
+- **HBalanced Strategy**: Focus on both attack and defense to optimize gameplay. Defending successfully refills your Mana by 3 points, enabling more attacks or defenses in subsequent turns.
 
 ![Moves Transaction](./moves.png)
 
@@ -108,6 +115,18 @@ Before you begin, ensure you have met the following requirements:
 4. **If P1 defends, P2’s attack is equal to P2’s attack - P1’s defense**: Defending reduces the impact of the attack by the defender's defense value.
 5. **If a player defends, they refill 3 Mana**: Successful defense replenishes the defender's Mana by 3 points.
 6. **If a player attacks, they spend 3 Mana**: Each attack costs the attacker 3 Mana points.
+
+![Rules](./rules.png)
+
+## Tech Stack
+
+- **Docker**: Containerization for seamless deployment.
+- **JavaScript/TypeScript**: Main programming languages used in the project.
+- **Hardhat**: Development environment for Ethereum-compatible smart contracts.
+- **Solidity**: Programming language for writing smart contracts.
+- **OpenZeppelin**: Library for secure smart contract development.
+- **React**: JavaScript library for building user interfaces.
+- **Tailwind CSS**: Tailwind CSS for styling of the application.
 
 ## Contributing
 
@@ -123,5 +142,21 @@ We welcome contributions to Avax-Gods! To contribute, please follow these steps:
 
 - The Solidity code for Avax-Gods is written using Solidity version ^0.8.19. Ensure your development environment is compatible with this version for optimal performance and compatibility.
 - The frontend of Avax-Gods is built using React and Vite, providing a fast and modern development experience.
+- A modal will open if you are not connected to the Fuji C-Chain network, prompting you to switch networks for proper functionality
+- Docker is integrated into the frontend for streamlined development and deployment.
 
 ![Modal](./modal.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
