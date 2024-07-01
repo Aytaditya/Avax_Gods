@@ -27,7 +27,7 @@ Welcome to **Avax-Gods**, where blockchain technology meets the thrill of decent
 
 Avax-Gods is a strategic NFT card game built on blockchain technology. Players can connect their Core or MetaMask wallets to engage in exciting battles, utilizing their NFT cards to attack, defend, and outsmart their opponents.
 
-![BattleGround Image](./battleground1.png)
+![BattleGround Image](./images/battleground1.png)
 
 ## Features
 
@@ -39,7 +39,7 @@ Avax-Gods is a strategic NFT card game built on blockchain technology. Players c
 - **Community Engagement**: Join a vibrant community of gamers and NFT enthusiasts.
 - **Exiting Battle**: You can also exit the battle. 
 
-![Battleground Options](./options.png)
+![Battleground Options](./images/options.png)
 
 ## Getting Started
 
@@ -86,7 +86,7 @@ Before you begin, ensure you have met the following requirements:
 4. Click "Create Battle" to initiate the game.
 5. You can also join an existing battle
 
-![Player Waiting Area](./wait.png)
+![Player Waiting Area](./images/wait.png)
 
 ### Joining a Battle
 
@@ -95,7 +95,7 @@ Before you begin, ensure you have met the following requirements:
 3. Select a battle to join.
 4. Confirm your participation.
 
-![Joining a Battle](./join.png)
+![Joining a Battle](./images/join.png)
 
 ### Battle Mechanics
 
@@ -105,11 +105,11 @@ Before you begin, ensure you have met the following requirements:
 - **Hidden Opponent Values**: You cannot see your opponent's attack and defense values. Strategize your moves based on your card's values and anticipate your opponent's actions.
 - **Balanced Strategy**: Focus on both attack and defense to optimize gameplay. Defending successfully refills your Mana by 3 points, enabling more attacks or defenses in subsequent turns.
 
-![Moves Transaction](./moves.png)
+![Moves Transaction](./images/moves.png)
 
-![Battle](./battleground2.png)
+![Battle](./images/battleground2.png)
 
-![Battle](./battleground3.png)
+![Battle](./images/battleground3.png)
 
 ## Game Rules
 
@@ -120,7 +120,7 @@ Before you begin, ensure you have met the following requirements:
 5. **If a player defends, they refill 3 Mana**: Successful defense replenishes the defender's Mana by 3 points.
 6. **If a player attacks, they spend 3 Mana**: Each attack costs the attacker 3 Mana points.
 
-![Rules](./rules.png)
+![Rules](./images/rules.png)
 
 ## Tech Stack
 
@@ -149,11 +149,11 @@ We welcome contributions to Avax-Gods! To contribute, please follow these steps:
 - A modal will open if you are not connected to the Fuji C-Chain network, prompting you to switch networks for proper functionality
 - Docker is integrated into the frontend for streamlined development and deployment.
 
-![Modal](./modal.png)
+![Modal](./images/modal.png)
 
-![Modal](./modal1.png)
+![Modal](./images/modal1.png)
 
-![Modal](./modal2.png)
+![Modal](./images/modal2.png)
 
 
 
