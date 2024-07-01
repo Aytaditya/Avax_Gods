@@ -23,4 +23,6 @@
 
 ![BattleGround Image](./battleground.png)
 
+![Battleground Options](./options.png)
+
 

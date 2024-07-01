@@ -20,11 +20,11 @@ const Card = ({card,title,restStyles,cardRef,playerTwo}) => {
       <div className={`relative   z-0 transition-all ${restStyles}`}>
       <img src={playerTwo ? img2 : img1} alt="Card Image" className={styles.cardImg}/>
 
-      <div className={`${styles.cardPointContainer} sm:left-[17%] sm:bottom-[27%] left-[22%] ${styles.flexCenter}`}>
+      <div className={`${styles.cardPointContainer} sm:left-[18%] sm:bottom-[28%] left-[22%] ${styles.flexCenter}`}>
         <p className={`${styles.cardPoint} text-yellow-400 `}>{card}</p>
       </div>
 
-      <div className={`${styles.cardPointContainer} sm:left-[66%] sm:bottom-[27%] left-[22%] ${styles.flexCenter}`}>
+      <div className={`${styles.cardPointContainer} sm:left-[67%] sm:bottom-[28%] left-[22%] ${styles.flexCenter}`}>
         <p className={`${styles.cardPoint} text-red-700 `}>{card}</p>
       </div>
 

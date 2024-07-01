@@ -39,7 +39,7 @@ const GameInfo = () => {
 
         </div>
 
-        <h3 className={styles.gameInfoHeading}>Game Rules:</h3>
+        <h3 className={styles.gameInfoHeading}>Game Rules :</h3>
 
         <div className='mt-3'>
           {gameRules.map((rule,index)=>(
@@ -53,6 +53,10 @@ const GameInfo = () => {
         </div>
       </div>
 
+          <div className={`${styles.flexBetween} mt-6 gap-4 w-full`}>
+            <CustomButton title="Change battleground" handleClick={()=>navigate('/battleground')}/>
+            <CustomButton title="Exit Battle" handleClick={handleBattleExit}/>
+          </div>
     </div>
       
     </>

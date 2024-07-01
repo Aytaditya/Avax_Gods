@@ -11,26 +11,34 @@ const { ethereum } = window;
 export const GlobalContextProvider = ({ children }) => {
   const [walletAddress, setWalletAddress] = useState('');
 
+    // battleground image
   const [battleGround, setBattleGround] = useState('bg-astral');
 
-
+  // smart contract and provider state
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
+
+
   const [step, setStep] = useState(1);
 
   // game data state to store all the pending and existing battles
   const [gameData, setGameData] = useState({ players: [], pendingBattles: [], activeBattle: null });
 
-
+  // alert state to show alerts
   const [showAlert, setShowAlert] = useState({ status: false, type: 'info', message: '' });
+
+  // battlename
   const [battleName, setBattleName] = useState('');
+
+  // error message state
   const [errorMessage, setErrorMessage] = useState('');
 
-
+  // for updating Game data for oponnent joins the game
   const [updateGameData, setUpdateGameData] = useState(0);
 
   const player1Ref = useRef();
   const player2Ref = useRef();
+
   const navigate = useNavigate();
 
   // Function to store data in local storage with expiry
@@ -62,6 +70,15 @@ export const GlobalContextProvider = ({ children }) => {
       return null;
     }
   };
+
+  useEffect(()=>{
+        const isBattleground=localStorage.getItem("battleground");
+        if(isBattleground){
+            setBattleGround(isBattleground);
+        }else{
+          localStorage.setItem("battleground",battleGround);
+        }
+  },[])
 
   useEffect(() => {
     const handleAccountsChanged = (accounts) => {
