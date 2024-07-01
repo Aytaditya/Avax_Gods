@@ -107,6 +107,8 @@ Before you begin, ensure you have met the following requirements:
 
 ![Moves Transaction](./moves.png)
 
+![Battle](./battleground2.png)
+
 ## Game Rules
 
 1. **Card with the same defense and attack points will cancel each other out**: When two cards with identical attack and defense points clash, they both are nullified.
