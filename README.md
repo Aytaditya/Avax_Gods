@@ -27,7 +27,7 @@ Welcome to **Avax-Gods**, where blockchain technology meets the thrill of decent
 
 Avax-Gods is a strategic NFT card game built on blockchain technology. Players can connect their Core or MetaMask wallets to engage in exciting battles, utilizing their NFT cards to attack, defend, and outsmart their opponents.
 
-![BattleGround Image](./battleground.png)
+![BattleGround Image](./battleground1.png)
 
 ## Features
 
