@@ -103,7 +103,7 @@ Before you begin, ensure you have met the following requirements:
 - **Decision Making**: Based on the card values, players can choose to either attack or defend.
 - **Player Health**: Each player has a health of 25 points.
 - **Hidden Opponent Values**: You cannot see your opponent's attack and defense values. Strategize your moves based on your card's values and anticipate your opponent's actions.
-- **HBalanced Strategy**: Focus on both attack and defense to optimize gameplay. Defending successfully refills your Mana by 3 points, enabling more attacks or defenses in subsequent turns.
+- **Balanced Strategy**: Focus on both attack and defense to optimize gameplay. Defending successfully refills your Mana by 3 points, enabling more attacks or defenses in subsequent turns.
 
 ![Moves Transaction](./moves.png)
 
