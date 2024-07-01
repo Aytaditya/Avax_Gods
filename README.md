@@ -3,7 +3,7 @@
 
 Welcome to **Avax-Gods**, where blockchain technology meets the thrill of decentralized gaming! Avax-Gods is an innovative project that allows users to immerse themselves in a world of strategy and competition. By connecting your Core or MetaMask wallet, you can create battles or join existing ones with ease. Engage in intense battles where every move counts.
 
-![Home Image](./home.png)
+![Home Image](./images/home.png)
 
 ## Table of Contents
 
