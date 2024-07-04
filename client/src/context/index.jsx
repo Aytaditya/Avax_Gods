@@ -286,6 +286,7 @@ useEffect(()=>{
         setBattleGround,
         player1Ref,
         player2Ref,
+        updateCurrentWalletAddress,
       }}
     >
       {children}

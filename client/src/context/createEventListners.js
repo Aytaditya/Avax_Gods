@@ -42,6 +42,18 @@ export const createEventListeners = ({navigate,contract,provider,walletAddress,s
         }
     })
 
+    const newGameTokenEventFilter=contract.filters.NewGameToken();
+    addNewEvent(newGameTokenEventFilter,provider,({args})=>{
+        console.log("New Game Token Created",args,walletAddress);
+
+        if(walletAddress.toLowerCase()===args.owner.toLowerCase()){
+            setShowAlert({status:true,type:"success",message:`Game Token Created Successfully 🎉`})
+            toast.success("Player Game token has been Created Successfully 🎉")
+        }
+
+        navigate('/create-battle')
+    })
+
     const NewBattleEventFilter=contract.filters.NewBattle();
     addNewEvent(NewBattleEventFilter,provider,({args})=>{
         console.log("New Battle Created",args,walletAddress);
@@ -82,6 +94,20 @@ export const createEventListeners = ({navigate,contract,provider,walletAddress,s
         }
 
         setUpdateGameData((prevUpdateGameData)=>prevUpdateGameData+1);
+    })
+
+    const BattleEndedEventFilter=contract.filters.BattleEnded();
+    addNewEvent(BattleEndedEventFilter,provider,({args})=>{
+        console.log("Battle Ended",args,walletAddress);
+
+        if(args.winner.toLowerCase()===walletAddress.toLowerCase()){
+            toast.success("You Won the Battle 🎉")
+        }
+        else{
+            toast.error("You Lost the Battle 😢")
+        }
+
+        navigate('/create-battle')
     })
   
 }

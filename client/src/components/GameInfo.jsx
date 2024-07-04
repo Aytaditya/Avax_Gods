@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import CustomButton from './CustomButton'
 import {useGlobalContext} from '../context'
 import { AlertIcon,alertIcon,gameRules } from '../assets'
+import {Toaster,toast} from 'react-hot-toast'
 
 import styles from '../styles'
 
@@ -12,8 +13,17 @@ const GameInfo = () => {
   const [toggleSideBar,setToggleSideBar] = useState(false)
   const navigate = useNavigate()
 
-  const handleBattleExit=()=>{
+  const handleBattleExit=async()=>{
+      const battleName=gameData.activeBattle.name;
 
+      try {
+          await contract.quitBattle(battleName);
+          toast.success(`Successfully exited ${battleName}!!`)
+
+      } catch (error) {
+        console.log(error.message)
+        toast.error('Failed to exit battle')
+      }
   }
 
   useEffect(()=>{
@@ -21,8 +31,8 @@ const GameInfo = () => {
   },[])
   return (
     <>
-
     <div className={styles.gameInfoIconBox}>
+      <Toaster/>
       <div className={`${styles.gameInfoIcon} ${styles.flexCenter}`} onClick={()=>setToggleSideBar(true)}>
         <img src={alertIcon} alt="Info" className={styles.gameInfoIconImg} />
 

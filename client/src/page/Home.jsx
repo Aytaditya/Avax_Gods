@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { contract, walletAddress, setShowAlert } = useGlobalContext();
+  const { contract, walletAddress, setShowAlert,gameData } = useGlobalContext();
   const [playerName, setPlayerName] = useState("");
   const [loading, setLoading] = useState(false);
   
@@ -64,6 +64,14 @@ const Home = () => {
 
     checkForPlayerToken();
   }, [contract, walletAddress, navigate]);
+
+
+  useEffect(()=>{
+    if(gameData.activeBattle){
+      navigate(`/battleground/${gameData.activeBattle.name}`)
+      toast.success("Redirecting to Battle")
+    }
+  },[gameData])
 
   return (
     <div className='flex flex-col '>
