@@ -1,6 +1,16 @@
 
 # Avax Gods
 
+<div align="center">
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white) 
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badgelogo=react&logoColor=%2361DAFB) 
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white) 
+![Web3.js](https://img.shields.io/badge/web3.js-F16822?style=for-the-badge&logo=web3.js&logoColor=white) 
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) 
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+</div>
+
 Welcome to **Avax-Gods**, where blockchain technology meets the thrill of decentralized gaming! Avax-Gods is an innovative project that allows users to immerse themselves in a world of strategy and competition. By connecting your Core or MetaMask wallet, you can create battles or join existing ones with ease. Engage in intense battles where every move counts.
 
 ![Home Image](./images/home.png)
@@ -154,10 +164,6 @@ We welcome contributions to Avax-Gods! To contribute, please follow these steps:
 ![Modal](./images/modal1.png)
 
 ![Modal](./images/modal2.png)
-
-
-
-
 
 
 
