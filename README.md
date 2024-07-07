@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/web3.js-F16822?style=for-the-badge&logo=web3.js&logoColor=white" alt="Web3.js" />
   <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS" />
   <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
-  <img src="https://img.shields.io/badge/Context--Api-000000?style=for-the-badge&logo=react" src="Context API/>
+  <img src="https://img.shields.io/badge/Context--Api-000000?style=for-the-badge&logo=react" src="Context API"/>
 </div>
 
 
