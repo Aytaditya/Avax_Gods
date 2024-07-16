@@ -78,7 +78,9 @@ const Battle = () => {
     playAudio(move===1?attackSound:defenseSound)
     try {
 
-      await contract.attackOrDefendChoice(move,battleName);
+      await contract.attackOrDefendChoice(move,battleName,{
+        gasLimit:200000
+      });
       toast.success(`Initating ${move===1 ? 'Attack' : 'Defense'}🎉`)
 
       
